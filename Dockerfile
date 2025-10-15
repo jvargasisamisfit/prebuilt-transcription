@@ -10,14 +10,17 @@ RUN apk add --no-cache libc6-compat wget
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install all dependencies (including dev deps needed for build)
+RUN npm ci
 
 # Copy application files
 COPY . .
 
 # Build Next.js app
 RUN npm run build
+
+# Remove dev dependencies after build
+RUN npm prune --production
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs && \
