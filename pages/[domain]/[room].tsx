@@ -52,8 +52,12 @@ const Room: NextPage = ({}) => {
     });
     setCallFrame(newCallFrame);
 
+    // Get username from localStorage
+    const savedName = localStorage.getItem("dailyUserName");
+
     newCallFrame.join({
       url: url,
+      userName: savedName || undefined,
     });
 
     newCallFrame.on("error", (ev: DailyEventObjectFatalError | undefined) => {

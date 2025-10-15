@@ -2,54 +2,106 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 
 import styles from "../styles/Home.module.css";
 
 function Form() {
-  let [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  let [isCreating, setIsCreating] = useState<boolean>(false);
+  let [isCreated, setIsCreated] = useState<boolean>(false);
   let [link, setLink] = useState<string>("");
+  let [error, setError] = useState<string>("");
+  let [userName, setUserName] = useState<string>("");
 
-  const buildUrl = (ev: any) => {
-    ev.preventDefault(); // don't redirect the page
-    const source = ev.target;
-    const link = `${window.location.href}${source.domain.value}/${source.room.value}?t=${source.token.value}`;
-    setIsSubmitted(true);
-    setLink(link);
+  useEffect(() => {
+    // Load username from localStorage
+    const savedName = localStorage.getItem("dailyUserName");
+    if (savedName) {
+      setUserName(savedName);
+    }
+  }, []);
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value;
+    setUserName(name);
+    localStorage.setItem("dailyUserName", name);
+  };
+
+  const createRoom = async () => {
+    setIsCreating(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/create-room", {
+        method: "POST",
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create room");
+      }
+
+      // Build the full URL using the room name from the API response
+      // Include the owner token if provided
+      let roomUrl = `${window.location.origin}/${process.env.NEXT_PUBLIC_DAILY_DOMAIN || 'misfits'}/${data.name}`;
+      if (data.token) {
+        roomUrl += `?t=${data.token}`;
+      }
+      setLink(roomUrl);
+      setIsCreated(true);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(link);
+  };
+
+  const resetForm = () => {
+    setIsCreated(false);
+    setLink("");
+    setError("");
   };
 
   return (
     <div>
-      {!isSubmitted ? (
-        <form className={styles.form} onSubmit={buildUrl}>
-          <label htmlFor="domain">Your domain</label>
-          <input id="domain" type="text" autoComplete="domain" required />
-          <label htmlFor="room">Your room</label>
-          <input id="room" type="text" autoComplete="room" required />
-          <label htmlFor="token">Room token</label>
-          <input id="token" type="text" autoComplete="token" />
-          <button type="submit">Create link</button>
-        </form>
+      {!isCreated ? (
+        <div className={styles.form}>
+          <label htmlFor="userName">Your Name</label>
+          <input
+            id="userName"
+            type="text"
+            value={userName}
+            onChange={handleNameChange}
+            placeholder="Enter your name"
+            autoComplete="name"
+          />
+          <button
+            onClick={createRoom}
+            disabled={isCreating}
+            type="button"
+          >
+            {isCreating ? "Creating Room..." : "Create Room"}
+          </button>
+          {error && <p className={styles.error}>{error}</p>}
+        </div>
       ) : (
         <div className={styles.linkGroup}>
           <Link href={link}>
             <a>{link}</a>
           </Link>
           <div>
-            <a
-              onClick={() => {
-                navigator.clipboard.writeText(link);
-              }}
-            >
-              Copy
-            </a>
+            <a onClick={copyToClipboard}>Copy</a>
             <a href={link}>Join</a>
-            <a href={"/"}>Go back</a>
+            <a onClick={resetForm}>Create Another</a>
           </div>
           <span>
-            Note: This form does not validate that the above room exists; you
-            may want to verify before sharing with others!
+            Share this link with others to join your room!
           </span>
         </div>
       )}
