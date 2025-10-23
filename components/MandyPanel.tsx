@@ -229,7 +229,7 @@ const MandyPanel = ({
       <div className={styles.section}>
         <h3>Tips</h3>
         <ul>
-          <li>Say "Hey Mandy…" to ask for help.</li>
+          <li>Say {'"'}Hey Mandy…{'"'} to ask for help.</li>
           <li>Mandy mirrors voice replies with chat notes.</li>
           <li>Two mutes within a minute keep Mandy silent until unmuted.</li>
         </ul>

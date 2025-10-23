@@ -317,7 +317,6 @@ const Room: NextPage = ({}) => {
     mandyStarting,
     roomSlug,
     tokenSlug,
-    localUserName,
     mandyState.directive,
   ]);
 

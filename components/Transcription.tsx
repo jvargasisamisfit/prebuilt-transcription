@@ -63,7 +63,7 @@ const Transcription = ({ callFrame, isTranscribing, newMsg, owner }: Props) => {
     if (messages && messages.length > 0) {
       scrollToBottom();
     }
-  }, [messages]);
+  }, [messages, scrollToBottom]);
 
   /*
     Build virtualized transcript window
