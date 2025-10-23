@@ -1,30 +1,85 @@
+.homeContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark-background);
+}
+
+.homeMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.homeMain h1 {
+  font-size: 3rem;
+  margin: 0;
+  color: var(--grey-lightest);
+  text-align: center;
+}
+
 .form {
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: 1fr 3fr;
-  max-width: 25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 300px;
+}
+
+.form label {
+  font-size: 0.9rem;
+  color: var(--light-grey);
+}
+
+.form input {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--dark-blue-border);
+  background-color: var(--dark-surface);
+  color: var(--grey-lightest);
+  font-size: 1rem;
+}
+
+.form input::placeholder {
+  color: var(--dark-grey);
 }
 
 .form button {
-  grid-column: span 2;
+  padding: 12px 24px;
+  font-size: 1rem;
 }
 
 .linkGroup {
-  display: grid;
-  grid-gap: 1rem;
-  max-width: 30rem;
-  grid-template-columns: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 300px;
+  padding: 1.5rem;
+  background-color: var(--dark-surface);
+  border-radius: 12px;
+  border: 1px solid var(--dark-blue-border);
+}
+
+.linkGroup a {
+  color: var(--turquoise);
   word-break: break-all;
+}
+
+.linkGroup > div {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .linkGroup div a {
   text-decoration: none;
-  font-size: 12px;
+  font-size: 14px;
   border-radius: 8px;
-  margin: 0.25rem;
   border: 1px solid var(--turquoise);
   background-color: var(--turquoise);
-  color: #1f2d3d;
+  color: var(--dark-blue);
   padding: 8px 16px;
   cursor: pointer;
 }
@@ -32,6 +87,11 @@
 .linkGroup div a:hover {
   cursor: pointer;
   box-shadow: rgba(27, 235, 185, 0.6) 0px 0px 0px 2px;
+}
+
+.linkGroup > span {
+  color: var(--light-grey);
+  font-size: 0.9rem;
 }
 
 .error {

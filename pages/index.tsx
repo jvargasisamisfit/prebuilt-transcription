@@ -1,9 +1,7 @@
-/* eslint-disable react/no-unescaped-entities */
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import Header from "../components/Header";
 
 import styles from "../styles/Home.module.css";
 
@@ -111,22 +109,14 @@ function Form() {
 
 const Home: NextPage = ({}) => {
   return (
-    <div>
+    <div className={styles.homeContainer}>
       <Head>
-        <title>🎙️ Daily Prebuilt + Transcription 🎙️</title>
-        <meta name="description" content="" />
+        <title>Group Mode</title>
+        <meta name="description" content="Group Mode - Collaborative meetings with AI assistance" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <Header error={""} isTranscribing={false} owner={false} token={false} />
-      <main className="index">
-        <h1>🎙️ Daily Prebuilt + Transcription 🎙️</h1>
-        <p>
-          Check out this repo's{" "}
-          <a href="https://github.com/daily-demos/prebuilt-transcription">
-            README
-          </a>{" "}
-          for setup details.
-        </p>
+      <main className={styles.homeMain}>
+        <h1>Group Mode</h1>
         <Form></Form>
       </main>
     </div>

@@ -36,3 +36,18 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# Python
+mandy-bot/.venv/
+mandy-bot/.env
+mandy-bot/__pycache__/
+mandy-bot/*.pyc
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+.mandy_server.log
+
+# MCP/Playwright
+.playwright-mcp/

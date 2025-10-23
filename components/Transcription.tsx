@@ -61,11 +61,8 @@ const Transcription = ({ callFrame, isTranscribing, newMsg, owner }: Props) => {
 
   useEffect(() => {
     if (messages && messages.length > 0) {
-      return () => {
-        scrollToBottom();
-      };
+      scrollToBottom();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   /*
@@ -77,12 +74,24 @@ const Transcription = ({ callFrame, isTranscribing, newMsg, owner }: Props) => {
   }
 
   function setRowHeight(index: number, size: number) {
-    listRef.current.resetAfterIndex(0);
+    if (
+      listRef.current &&
+      typeof listRef.current.resetAfterIndex === "function"
+    ) {
+      listRef.current.resetAfterIndex(0);
+    }
     rowRef.current = { ...rowRef.current, [index]: size };
   }
 
   function scrollToBottom() {
-    listRef.current.scrollToItem(messages.length, "end");
+    if (
+      listRef.current &&
+      typeof listRef.current.scrollToItem === "function" &&
+      messages.length > 0
+    ) {
+      const targetIndex = Math.max(messages.length - 1, 0);
+      listRef.current.scrollToItem(targetIndex, "end");
+    }
   }
 
   type rowProps = {
@@ -98,7 +107,7 @@ const Transcription = ({ callFrame, isTranscribing, newMsg, owner }: Props) => {
         setRowHeight(index, rowRef.current.clientHeight);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [rowRef]);
+    }, [messages[index]?.text, index]);
 
     return (
       <div style={style}>

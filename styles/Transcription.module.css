@@ -1,45 +1,50 @@
 .transcription {
-  padding: 0;
+  padding: 16px;
   margin: 0;
-  display: grid;
-  grid-template-columns: 20% 80%;
-  height: 14vh;
-  max-height: 14vh;
-  border-top: 1px solid var(---dark-grey);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  overflow: hidden;
 }
 
 .transcript {
-  padding-left: 1rem;
+  flex: 1;
+  color: var(--grey-lightest);
+  overflow: hidden;
 }
 
 .buttons {
-  display: grid;
-  align-content: center;
-  padding: 1rem;
-  border-right: 1px solid var(--dark-blue-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .buttons span {
   font-size: 0.75rem;
+  color: var(--light-grey);
+  line-height: 1.4;
+}
+
+.buttons span a {
+  color: var(--turquoise);
 }
 
 .buttons > button,
 .buttons > a {
-  float: right;
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
   border-radius: 8px;
-  margin-bottom: 0.25rem;
-  margin-top: 0.25rem;
   border: 1px solid var(--turquoise);
   background-color: var(--turquoise);
-  color: #1f2d3d;
-  padding: 6px 16px;
+  color: var(--dark-blue);
+  padding: 8px 16px;
   cursor: pointer;
 }
 
 .buttons > a {
   text-decoration: none;
+  display: block;
 }
 
 .buttons > button:disabled {
@@ -47,28 +52,12 @@
   border: 1px solid var(--grey);
   cursor: default;
   pointer-events: none;
+  color: var(--dark-grey);
 }
 
 .timestamp {
   color: var(--dark-grey);
   float: right;
-}
-
-@media all and (max-width: 576px) {
-  .transcription {
-    grid-template-columns: auto;
-    max-height: none;
-  }
-  .buttons {
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 0.5rem;
-    height: 4vh;
-    border-right: none;
-  }
-  .transcript {
-    height: 24vh;
-  }
-  .timestamp {
-    display: none;
-  }
+  font-size: 0.85rem;
+  margin-left: 8px;
 }
